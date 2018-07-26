@@ -1,6 +1,6 @@
 # LARAVEL-VALIDATOR-ENHANCEMENT
 
-一个能帮你从 VALIDATOR/ 寻参/ 默认赋值 的逻辑中省代码的包。
+一个能帮你从 VALIDATOR/ 寻参/ 默认赋值 的逻辑中省代码的包。
 
 ## Install
 
