@@ -11,6 +11,8 @@
  */
 namespace Laravelfy\Validator;
 
+use Validator;
+
 /**
  * 验证器扩展
  *
