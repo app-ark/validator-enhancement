@@ -4,8 +4,14 @@
 
 ## Install
 
+1. Install to your composer project
 ```bash
 composer require laravelfy/validator-enhancement
+```
+
+2. Add service provider into `config/app.php` 's `providers` config array by filling:
+```
+Laravelfy\Validator\ServiceProvider::class,
 ```
 
 ## Usage
