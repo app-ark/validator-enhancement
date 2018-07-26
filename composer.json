@@ -1,0 +1,25 @@
+{
+    "name": "laravelfy/validator-enhancement",
+    "description": "Laravel's validator enhancement",
+    "type": "library",
+    "require": {
+        "laravel/framework": "5.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xiaohui.lam",
+            "email": "xiaohui.lam@icloud.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Laravelfy\\Validator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laravelfy\\Validator\\Test\\": "test/"
+        }
+    }
+}
