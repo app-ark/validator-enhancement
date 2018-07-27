@@ -21,5 +21,12 @@
         "psr-4": {
             "Laravelfy\\Validator\\Test\\": "test/"
         }
+    },
+    "extra": {
+        "laravel": {        
+            "providers": [            
+                "Laravelfy\\Validator\\ServiceProvider"
+            ],
+        }
     }
 }
