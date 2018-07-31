@@ -53,8 +53,9 @@ class ValidatorEnhancement
         request()->macro(
             'validate',
             function ($rules) {
+                $params = array_merge(request()->all(), request()->route()->parameters());
                 $validator = Validator::make(
-                    request()->all(), $rules
+                    $params, $rules
                 );
 
                 if ($validator->fails()) {
@@ -67,6 +68,9 @@ class ValidatorEnhancement
                         $value = request()->file($parameter);
                     } else {
                         $value = request()->input($parameter);
+                        if (!$value && request()->route($parameter)) {
+                            $value = request()->route($parameter);
+                        }
                     }
                     $list[] = $value;
                 }
