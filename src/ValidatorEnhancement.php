@@ -12,6 +12,7 @@
 namespace Laravelfy\Validator;
 
 use Validator;
+use Laravelfy\Validator\Exceptions\ValidationException;
 
 /**
  * 验证器扩展
@@ -59,7 +60,7 @@ class ValidatorEnhancement
                 );
 
                 if ($validator->fails()) {
-                    throw new \Exception($validator->errors());
+                    throw new ValidationException($validator);
                 }
 
                 $list = [];
