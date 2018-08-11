@@ -32,13 +32,25 @@ class ServiceProvider extends BaseServiceProvider
     protected $defer = false;
 
     /**
+     * 验证器
+     *
+     * @var ValidatorEnhancement
+     */
+    protected $validate = null;
+
+    /**
      * 在服务容器里注册
      *
      * @return void
      */
     public function boot()
     {
-        ValidatorEnhancement::extendDefault();
-        ValidatorEnhancement::injectRequest();
+        $this->app->singleton(ValidatorEnhancement::class, function ($app) {
+            return new ValidatorEnhancement();
+        });
+        $this->validate = app(ValidatorEnhancement::class);
+
+        $this->validate->extendDefault();
+        $this->validate->validate();
     }
 }
