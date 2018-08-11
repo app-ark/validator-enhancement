@@ -11,8 +11,9 @@
  */
 namespace Laravelfy\Validator;
 
-use Validator;
+use Illuminate\Http\Request;
 use Laravelfy\Validator\Exceptions\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * 验证器扩展
@@ -36,7 +37,7 @@ class ValidatorEnhancement
             'default',
             function ($attribute, $value, $parameter, $validator) {
                 if ($value === "" || $value === null) {
-                    request()->merge([$attribute => end($parameter)]);
+                    \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->merge([$attribute => end($parameter)]);
                     $value = end($parameter);
                 }
                 return true;
@@ -51,10 +52,10 @@ class ValidatorEnhancement
      */
     public function validate()
     {
-        request()->macro(
+        Request::macro(
             'validate',
             function ($rules) {
-                $params = array_merge(request()->all(), request()->route()->parameters());
+                $params = array_merge(\Illuminate\Support\Facades\Facade::getFacadeApplication()->request->all(), \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->route() ? \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->route()->parameters():[]);
                 $validator = Validator::make($params, $rules);
 
                 if ($validator->fails()) {
@@ -64,11 +65,11 @@ class ValidatorEnhancement
                 $list = [];
                 foreach ($rules as $parameter => $rule) {
                     if (preg_match('/(^|[\|])(file|image)/', $rule)) {
-                        $value = request()->file($parameter);
+                        $value = \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->file($parameter);
                     } else {
-                        $value = request()->input($parameter);
-                        if (!$value && request()->route($parameter)) {
-                            $value = request()->route($parameter);
+                        $value = \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->input($parameter);
+                        if (!$value && \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->route($parameter)) {
+                            $value = \Illuminate\Support\Facades\Facade::getFacadeApplication()->request->route($parameter);
                         }
                     }
                     $list[] = $value;
