@@ -26,41 +26,11 @@ use Laravelfy\Validator\Exceptions\ValidationException;
 class ValidatorEnhancement
 {
     /**
-     * 验证及取参
-     *
-     * @param array $rules 规则，同laravel Validator用法一样
-     * @return array
-     */
-    public static function validate($rules)
-    {
-        $params = array_merge(request()->all(), request()->route()->parameters());
-        $validator = Validator::make($params, $rules);
-
-        if ($validator->fails()) {
-            throw new ValidationException($validator);
-        }
-
-        $list = [];
-        foreach ($rules as $parameter => $rule) {
-            if (preg_match('/(^|[\|])(file|image)/', $rule)) {
-                $value = request()->file($parameter);
-            } else {
-                $value = request()->input($parameter);
-                if (!$value && request()->route($parameter)) {
-                    $value = request()->route($parameter);
-                }
-            }
-            $list[] = $value;
-        }
-        return $list;
-    }
-
-    /**
      * 扩展 default 指令
      *
      * @return void
      */
-    public static function extendDefault()
+    public function extendDefault()
     {
         Validator::extendImplicit(
             'default',
@@ -79,12 +49,31 @@ class ValidatorEnhancement
      *
      * @return void
      */
-    public static function injectRequest()
+    public function validate()
     {
         request()->macro(
             'validate',
             function ($rules) {
-                return ValidatorEnhancement::validate($rules);
+                $params = array_merge(request()->all(), request()->route()->parameters());
+                $validator = Validator::make($params, $rules);
+
+                if ($validator->fails()) {
+                    throw new ValidationException($validator);
+                }
+
+                $list = [];
+                foreach ($rules as $parameter => $rule) {
+                    if (preg_match('/(^|[\|])(file|image)/', $rule)) {
+                        $value = request()->file($parameter);
+                    } else {
+                        $value = request()->input($parameter);
+                        if (!$value && request()->route($parameter)) {
+                            $value = request()->route($parameter);
+                        }
+                    }
+                    $list[] = $value;
+                }
+                return $list;
             }
         );
     }
