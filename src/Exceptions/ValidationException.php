@@ -23,4 +23,13 @@ use Illuminate\Validation\ValidationException as BaseException;
  */
 class ValidationException extends BaseException
 {
+    /**
+     * 设置异常消息
+     *
+     * @param string $message
+     * @return void
+     */
+    public function setMessage($message) {
+        $this->message = $message;
+    }
 }
