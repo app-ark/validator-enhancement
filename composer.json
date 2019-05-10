@@ -19,8 +19,7 @@
         "illuminate/http": "5.*",
         "illuminate/routing": "5.*",
         "illuminate/events": "5.*",
-        "illuminate/validation": "5.*",
-        "filp/whoops": "~1.1.2"
+        "illuminate/validation": "5.*"
     },
     "autoload": {
         "psr-4": {
