@@ -12,6 +12,7 @@
 namespace Laravelfy\Validator;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laravelfy\Validator\Http\Request;
 
 /**
  * 服务提供者
@@ -52,5 +53,9 @@ class ServiceProvider extends BaseServiceProvider
 
         $this->validate->extendDefault();
         $this->validate->validate();
+
+        $this->app->singleton('http', function () {
+            return new Request(request()->query->all(), request()->request->all(), request()->attributes->all(), request()->cookies->all(), request()->files->all(), request()->server->all(), request()->getContent());
+        });
     }
 }
