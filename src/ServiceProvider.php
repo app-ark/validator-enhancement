@@ -57,5 +57,13 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton('http', function () {
             return new Request(request()->query->all(), request()->request->all(), request()->attributes->all(), request()->cookies->all(), request()->files->all(), request()->server->all(), request()->getContent());
         });
+
+        request()->macro('parameters', function () {
+            if (request()->route() && collect(request()->keys())->intersect(collect(request()->route()->parameters())->keys())->count()) {
+                throw new \Exception("Route parameters can't conflict with request parameters");
+            }
+
+            return collect(request()->all())->merge(request()->route() ? request()->route()->parameters() : [])->toArray();
+        });
     }
 }
