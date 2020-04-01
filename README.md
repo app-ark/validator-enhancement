@@ -2,7 +2,7 @@
 一个能帮你从 VALIDATOR/ 寻参/ 默认赋值 的逻辑中省代码的包。
 
 ---
-[![travis-ci.svg](https://img.shields.io/travis/laravelfy/validator-enhancement/master.svg?style=flat-square)](https://travis-ci.org/laravelfy/validator-enhancement)
+[![travis-ci.svg](https://img.shields.io/travis/app-ark/validator-enhancement/master.svg?style=flat-square)](https://travis-ci.org/app-ark/validator-enhancement)
 
 ## Install
 
